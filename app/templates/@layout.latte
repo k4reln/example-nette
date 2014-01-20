@@ -1,0 +1,96 @@
+{**
+ * My Application layout template.
+ *
+ * @param string   $basePath web base path
+ * @param string   $robots   tell robots how to index the content of a page (optional)
+ * @param array    $flashes  flash messages
+ *}
+
+ {default $active_home = FALSE, $active_bmi = FALSE, $active_blog = FALSE}
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>{block title|striptags|upper}Home{/block} | Sample app</title>
+	<meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="{$basePath}/favicon.ico">
+
+    <link rel="stylesheet" href="{$basePath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{$basePath}/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{$basePath}/css/main.css">
+
+    <script src="{$basePath}/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+	{block head}{/block}
+</head>
+
+<body>
+	<script> document.documentElement.className+=' js' </script>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" n:href="Homepage:">Sample App</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li n:class="$active_bmi ? active">
+                    <a n:href="Bmi:">Výpočet BMI</a>
+                </li>
+                <li n:class="$active_blog ? active">
+                    <a n:href="Blog:">Blog</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {* <li>
+                    <a href="#">Link</a>
+                </li> *}
+                {if $user->isInRole('admin')}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Admin <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a n:href="Blog:new">Nový článek</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a n:href="Sign:out">Odhlásit</a>
+                        </li>
+                    </ul>
+                </li>
+                {else}
+                <li>
+                    <a n:href="Sign:in">Přihlásit</a>
+                </li>
+                {/if}
+            </ul>
+        </div>
+    </nav>
+
+	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+
+	{include #content}
+
+	{block scripts}
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{$basePath}/js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+    <script src="{$basePath}/js/vendor/bootstrap.min.js"></script>
+    <script src="{$basePath}/js/main.js"></script>
+	<script src="{$basePath}/js/netteForms.js"></script>
+	{/block}
+</body>
+</html>

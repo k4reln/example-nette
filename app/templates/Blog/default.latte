@@ -1,0 +1,32 @@
+{block content}
+<h1 n:block=title>Blog</h1>
+
+{if $articles}
+<div class="blog-listing">
+    {control paginator}
+    <table>
+    <tr>
+        <th class="created">Datum vytvoření</th>
+        <th class="title">Název blogu</th>
+        {if $user->isLoggedIn()}
+        <th></th>
+        <th></th>
+        {/if}
+    </tr>
+        {foreach $articles as $item}
+        <tr>
+            <td class="created">{$item['created']}</td>
+            <td class="title"><a n:href="Blog:article, $item">{$item['title']}</a></td>
+            {if $user->isLoggedIn()}
+            <td><a n:href="Blog:edit, $item">Upravit</a></td>
+            <td><a n:href="Blog:delete, $item">Smazat</a></td>
+            {/if}
+        </tr>
+        {/foreach}
+    </table>
+    {control paginator}
+</div>
+{else}
+Blog není k dispozici.
+{/if}
+{/block}

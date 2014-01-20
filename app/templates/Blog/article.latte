@@ -1,0 +1,13 @@
+{block title}
+Blog - {$article['title']|striptags}
+{/block}
+
+{block content}
+{if $article}
+<h1>{!$article['title']}</h1>
+<p>{$article['created']}</p>
+<p>{!$article['content']}</p>
+{else}
+Článek není k dispozici.
+{/if}
+{/block}
